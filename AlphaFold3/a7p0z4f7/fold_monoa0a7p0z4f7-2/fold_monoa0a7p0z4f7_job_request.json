@@ -1,0 +1,15 @@
+[{
+ "name": "monoA0A7P0Z4F7",
+ "modelSeeds": [
+  "22477190"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "NIWLDSLLAIDARMLVLRTTRT",
+    "count": 1
+   }
+  }
+ ]
+}
+]

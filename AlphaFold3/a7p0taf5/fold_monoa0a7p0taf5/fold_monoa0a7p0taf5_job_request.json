@@ -1,0 +1,15 @@
+[{
+ "name": "monoA0A7P0TAF5",
+ "modelSeeds": [
+  "657409604"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "MTKSNGEEPKMGGRMERFQQGVRKRTLLAKKKVQNIT",
+    "count": 1
+   }
+  }
+ ]
+}
+]

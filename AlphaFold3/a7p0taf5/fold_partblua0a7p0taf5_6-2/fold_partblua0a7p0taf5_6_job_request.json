@@ -1,0 +1,15 @@
+[{
+ "name": "partbluA0A7P0TAF5-6",
+ "modelSeeds": [
+  "1507541177"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "MTKSNGEEPKMGGRMERFQQGVRKRTLLAKKKVQNIT",
+    "count": 6
+   }
+  }
+ ]
+}
+]

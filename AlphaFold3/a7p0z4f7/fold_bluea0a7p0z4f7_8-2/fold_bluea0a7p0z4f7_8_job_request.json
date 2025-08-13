@@ -1,0 +1,15 @@
+[{
+ "name": "blueA0A7P0Z4F7-8",
+ "modelSeeds": [
+  "875734348"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "NIWLDSLLAIDARMLVLRTTRT",
+    "count": 8
+   }
+  }
+ ]
+}
+]
