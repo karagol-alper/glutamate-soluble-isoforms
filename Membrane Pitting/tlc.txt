@@ -1,0 +1,71 @@
+# Load your structure first in VMD
+# Example: mol new membrane_system.pdb
+
+# Set parameters
+set bin_size 10.0 ;# Å per XY grid bin
+
+# Select headgroup atoms of upper leaflet (e.g., phosphate atoms with z > 0)
+set sel [atomselect top "resname POPC and name P and z > 0"]
+set coords [$sel get {x y z}]
+
+# --- Find min/max X and Y ---
+set first [lindex $coords 0]
+lassign $first minx miny _
+set maxx $minx
+set maxy $miny
+
+foreach coord $coords {
+    lassign $coord x y z
+    if {$x < $minx} { set minx $x }
+    if {$y < $miny} { set miny $y }
+    if {$x > $maxx} { set maxx $x }
+    if {$y > $maxy} { set maxy $y }
+}
+
+# --- Define grid size ---
+set nx [expr int(($maxx - $minx) / $bin_size) + 1]
+set ny [expr int(($maxy - $miny) / $bin_size) + 1]
+
+# --- Initialize Z bins ---
+for {set i 0} {$i < $nx} {incr i} {
+    for {set j 0} {$j < $ny} {incr j} {
+        set zlist($i,$j) {}
+    }
+}
+
+# --- Bin the Z values by XY grid position ---
+foreach coord $coords {
+    lassign $coord x y z
+    set ix [expr int(($x - $minx) / $bin_size)]
+    set iy [expr int(($y - $miny) / $bin_size)]
+    lappend zlist($ix,$iy) $z
+}
+
+# --- Define mean function (inline) ---
+proc mean {list} {
+    if {[llength $list] == 0} {
+        return "NaN"
+    }
+    set sum 0.0
+    foreach val $list {
+        set sum [expr {$sum + $val}]
+    }
+    return [expr {$sum / double([llength $list])}]
+}
+
+# --- Output average Z per grid point ---
+set outfile [open "membrane_surface_map.dat" w]
+puts $outfile "# i  j  avgZ"
+for {set i 0} {$i < $nx} {incr i} {
+    for {set j 0} {$j < $ny} {incr j} {
+        set zs $zlist($i,$j)
+        set avgz [mean $zs]
+        puts $outfile "$i $j $avgz"
+    }
+}
+close $outfile
+
+# --- Optional clean-up ---
+$sel delete
+
+puts "Surface height map written to 'membrane_surface_map.dat'"
